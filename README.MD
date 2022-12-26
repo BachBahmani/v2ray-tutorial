@@ -140,7 +140,76 @@ sudo certbot --nginx -d DOMAIN
 
 - سپس ممکن سوالاتی از شما پرسیده میشود که ایمیل و نوع ریدایرکت و .. را وارد کنید و صبر کنید تا SSL فعال شود.
 - پس از پایان مراحل آدرس دامنه را به صورت HTTPS باز کنید و تست کنید که خطای SSL ندارید مثلا: https://irserver.site.com
+- حال مانند بخش تنظیمات Nginx در سرور خارج عمل میکنیم و به ازای هر PATHی که برای آن VMESS داریم باید مقادیری را در فایل کانفیگ دامنه در NGINX اضافه کنیم.
 
+```nginx
+location /PATH {
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header Host $http_host;
+  proxy_set_header X-NginX-Proxy false;
+
+  proxy_pass https://mytest.site.com;
+  proxy_redirect off;
+
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection "upgrade";
+}
+```
+- در متن بالا بجای PATH مقدار pathی که در VMESS دادید را وارد کنید و بجای `mytest.site.com` زیردامنه سرور خارجتان را بدهید.
+- سپس مقدار مربوطه را در فایل کانفیگ دامنه بالای `listen 443 ssl; # managed by Certbot` قرار دهید.
+- فایل نمونه با تنظیمات ما:
+
+```nginx
+server {
+	root /var/www/html;
+	server_name irserver.site.com;
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+	}
+	
+	location /myuserurl {
+	  proxy_set_header X-Real-IP $remote_addr;
+	  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	  proxy_set_header Host $http_host;
+	  proxy_set_header X-NginX-Proxy false;
+
+	  proxy_pass https://mytest.site.com;
+	  proxy_redirect off;
+
+	  proxy_http_version 1.1;
+	  proxy_set_header Upgrade $http_upgrade;
+	  proxy_set_header Connection "upgrade";
+	}
+	
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/irserver.site.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/irserver.site.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+server {
+	listen 80;
+	listen [::]:80;
+	server_name irserver.site.com;
+}
+
+server {
+    if ($host = irserver.site.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+	server_name irserver.site.com;
+    listen 80;
+    return 404; # managed by Certbot
+}
+```
+
+- حالا nginx را ریستارت کنید `service nginx restart`
 -----------
 
 -----------
