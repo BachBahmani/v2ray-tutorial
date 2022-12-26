@@ -40,9 +40,18 @@
 [![Active New Record](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/3-arvan-newdnsrecord.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/3-arvan-newdnsrecord.png)
 
 - حال به بخش [آموزش نصب X-UI](https://github.com/masterking32/v2ray-tutorial#%D8%A2%D9%85%D9%88%D8%B2%D8%B4-%D9%86%D8%B5%D8%A8-x-ui) بروید و پس از انجام مراحل به این بخش بگردید و ادامه این آموزش را انجام دهید.
- 
-### این بخش را پس از نصب X-UI انجام دهید.
+- [یک VMESS و کاربر جدید بسازید.](https://github.com/masterking32/v2ray-tutorial#%D8%B3%D8%A7%D8%AE%D8%AA-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1-%D8%AC%D8%AF%DB%8C%D8%AF)
+- [تنظیمات NGINX را انجام دهید](https://github.com/masterking32/v2ray-tutorial#%D9%BE%DB%8C%DA%A9%D8%B1%D8%A8%D9%86%D8%AF%DB%8C-%D9%88-%D8%AA%D9%86%D8%B8%DB%8C%D9%85-Nginx-%D8%AF%D8%B1-%D8%B3%D8%B1%D9%88%D8%B1-%D9%85%D8%AC%D8%A7%D8%B2%DB%8C-%D8%AE%D8%A7%D8%B1%D8%AC)
+- پس از نصب X-UI و سپس ساخت کاربر جدید و تنظیم Nginx ادامه این آموزش را دنبال کنید.
+- به پنل ابرآروانتان رفته و سپس در بخش دامنه مربوطه روی گزینه رکوردهای DNS بزنید.
+- سپس زیردامنه ای که ساختید را پیدا کنید و مقدار استفاده از سرویس ابری را فعال کنید.
 
+[![Enable Cloud ArvanCloud](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/6-arvan-enablecloud.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/6-arvan-enablecloud.png)
+
+- کمی صبر کنید بین 5 تا 30 دقیقه تا تغییرات اعمال شود.
+- در v2ray client های خود مثل ویندوز و ... بعد از وارد کردن QRCode آنها را ویرایش کنید و Port را به 443 تغییر دهید.
+- توجه داشته باشید، پیش از اشتراک v2rayها یکبار آنها را در V2ray ویندوز خود Import کنید و پورت را تغییر دهید و سپس مجدد آنها رو کپی کنید و به کاربران خود بدهید.
+- برای Import یک v2ray در نسخه ویندوز v2ray از کلید CTRL + V استفاده کنید، سپس روی آن دوبار کلیک کنید و پورت را ویرایش کنید و سپس روی OK بزنید. حال v2ray مربوطه را انتخاب کنید و روی CTRL + C بزنید و آنرا برای دوستان خود بفرستید.  
 -----------
 
 ## روش دوم) به کمک سرور مجازی ایران
@@ -63,7 +72,7 @@ reboot
 - پس از راه اندازی مجدد سرور دستورات زیر را وارد کنید.
 
 ```bash
-apt install curl sudo wget socat -y
+apt install curl sudo wget socat nano -y
 ```
 
 ---
@@ -161,3 +170,111 @@ key file path : `/root/private.key`
 مقادیر path و port در ادامه آموزش هر بخش در Nginx مورد استفاده میباشد مقادیری که برای هر vmess ساختید را بخاطر بسپارید، در اینجا ما پورت 56010 و path به مقدار myuserurl داریم.
 
 حال به ادامه آموزش نصب خود بازگردید.
+
+### پیکربندی و تنظیم Nginx در سرور مجازی خارج
+
+- دستور زیر را وارد کنید و بجای Domain آدرس زیردامنه مربوط به خود را بدهید. مثلا: `mytest.site.com`
+```bash
+nano /etc/nginx/sites-available/DOMAIN
+```
+- فایل با ویرایشگر متن باز میشود در آن مقدایر زیر را وارد کنید و در مقادیر زیر بجای DOMAIN آدرس زیر دامنه خود را بنویسید.
+
+```nginx
+server {
+    server_name DOMAIN;
+    root /var/www/html;
+    index index.html;
+    location / {
+        try_files $uri $uri/ =404;
+    }
+    
+    listen [::]:443 ssl ipv6only=on;
+    listen 443 ssl;
+    ssl_certificate /root/cert.crt;
+    ssl_certificate_key /root/private.key;
+}
+server {
+    if ($host = DOMAIN) {
+        return 301 https://$host$request_uri;
+    }
+    listen 80;
+    listen [::]:80;
+    server_name DOMAIN;
+    return 404;
+}
+```
+- سپس فایل را ذخیره 
+- حالا دستورات زیر را وارد کنید و بجای DOMAIN اسم زیردامنه خودتان را بزنید.
+
+```bash
+ln /etc/nginx/sites-available/DOMAIN /etc/nginx/sites-enabled/DOMAIN
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.html
+service nginx restart
+```
+
+---
+
+- حال به ازای هر VMESSی که میسازید نیاز دارید کد زیر را ویرایش کرده و در فایل کانفیگ Nginxتان قرار دهید.
+
+```nginx
+location /PATH {
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header Host $http_host;
+  proxy_set_header X-NginX-Proxy false;
+
+  proxy_pass https://127.0.0.1:PORT;
+  proxy_redirect off;
+
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection "upgrade";
+}
+```
+
+بجای PATH مقداری pathی که در هنگام ساخت vmess دادید وارد کنید و بجای PORT مقدار پورتی که هنگام ساخت وارد شده را وارد کنید.
+- سپس مقدار مربوطه را بالای `listen [::]:443 ssl ipv6only=on;` در فایل کانفیگ nginx قرار دهید.
+
+نمونه کامل فایل Nginx ما مطابق با مقادیر آموزشی:
+```nginx
+server {
+    server_name mytest.site.com;
+    root /var/www/html;
+    index index.html;
+    location / {
+        try_files $uri $uri/ =404;
+    }
+    
+	location /myuserurl {
+	  proxy_set_header X-Real-IP $remote_addr;
+	  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	  proxy_set_header Host $http_host;
+	  proxy_set_header X-NginX-Proxy false;
+
+	  proxy_pass https://127.0.0.1:56010;
+	  proxy_redirect off;
+
+	  proxy_http_version 1.1;
+	  proxy_set_header Upgrade $http_upgrade;
+	  proxy_set_header Connection "upgrade";
+	}
+
+    listen [::]:443 ssl ipv6only=on;
+    listen 443 ssl;
+    ssl_certificate /root/cert.crt;
+    ssl_certificate_key /root/private.key;
+}
+server {
+    if ($host = mytest.site.com) {
+        return 301 https://$host$request_uri;
+    }
+    listen 80;
+    listen [::]:80;
+    server_name mytest.site.com;
+    return 404;
+}
+```
+
+
+
+
