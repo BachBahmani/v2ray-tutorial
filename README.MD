@@ -46,11 +46,11 @@
 - [تنظیمات NGINX را انجام دهید](https://github.com/masterking32/v2ray-tutorial#%D9%BE%DB%8C%DA%A9%D8%B1%D8%A8%D9%86%D8%AF%DB%8C-%D9%88-%D8%AA%D9%86%D8%B8%DB%8C%D9%85-Nginx-%D8%AF%D8%B1-%D8%B3%D8%B1%D9%88%D8%B1-%D9%85%D8%AC%D8%A7%D8%B2%DB%8C-%D8%AE%D8%A7%D8%B1%D8%AC)
 - پس از نصب X-UI و سپس ساخت کاربر جدید و تنظیم Nginx ادامه این آموزش را دنبال کنید.
 - به پنل ابرآروانتان رفته و سپس در بخش دامنه مربوطه روی گزینه رکوردهای DNS بزنید.
-- سپس زیردامنه ای که ساختید را پیدا کنید و مقدار استفاده از سرویس ابری را فعال کنید.
+- سپس زیردامنه ای که ساختید را پیدا کنید و گزینه استفاده از سرویس ابری را فعال کنید.
 
 [![Enable Cloud ArvanCloud](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/6-arvan-enablecloud.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/6-arvan-enablecloud.png)
 
-- کمی صبر کنید بین 5 تا 30 دقیقه تا تغییرات اعمال شود.
+- کمی بین 5 تا 30 دقیقه صبر کنید.
 - در v2ray client های خود مثل ویندوز و ... بعد از وارد کردن QRCode آنها را ویرایش کنید و Port را به 443 تغییر دهید.
 - توجه داشته باشید، پیش از اشتراک v2rayها یکبار آنها را در V2ray ویندوز خود Import کنید و پورت را تغییر دهید و سپس مجدد آنها رو کپی کنید و به کاربران خود بدهید.
 - برای Import یک v2ray در نسخه ویندوز v2ray از کلید CTRL + V استفاده کنید، سپس روی آن دوبار کلیک کنید و پورت را ویرایش کنید و سپس روی OK بزنید. حال v2ray مربوطه را انتخاب کنید و روی CTRL + C بزنید و آنرا برای دوستان خود بفرستید.  
@@ -61,7 +61,7 @@
 
 در این روش میتوانید از ArvanCloud یا Cloudflare و یا هر سرویس DNS دیگری استفاده کنید.
 
-در صورتی که میخواهید از ArvanCloud استفاده کنید، مانند آموزش بالا مراحل را طی کنید و در انتها سرویس ابری زیردامنه را فعال کنید و ادامه آموزش این بخش را دنبال کنید.
+در صورتی که میخواهید از ArvanCloud استفاده کنید، مانند آموزش بالا مراحل را طی کنید و در انتها سرویس ابری زیردامنه را فعال نکنید و ادامه آموزش این بخش را دنبال کنید.
 در این بخش ما از Cloudflare استفاده میکنیم.
 
 - ابتدا در سایت [Cloudflare](https://cloudflare.com/) ثبت نام کنید و یک دامنه به آن متصل کنید.
@@ -76,7 +76,7 @@
 - [یک VMESS و کاربر جدید بسازید.](https://github.com/masterking32/v2ray-tutorial#%D8%B3%D8%A7%D8%AE%D8%AA-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1-%D8%AC%D8%AF%DB%8C%D8%AF)
 - [تنظیمات NGINX را انجام دهید](https://github.com/masterking32/v2ray-tutorial#%D9%BE%DB%8C%DA%A9%D8%B1%D8%A8%D9%86%D8%AF%DB%8C-%D9%88-%D8%AA%D9%86%D8%B8%DB%8C%D9%85-Nginx-%D8%AF%D8%B1-%D8%B3%D8%B1%D9%88%D8%B1-%D9%85%D8%AC%D8%A7%D8%B2%DB%8C-%D8%AE%D8%A7%D8%B1%D8%AC)
 - پس از نصب X-UI و سپس ساخت کاربر جدید و تنظیم Nginx ادامه این آموزش را دنبال کنید.
-- حال مجدد به بخش DNS Records در Cloudflare بروید و یک Add Record بزنید.
+- حال مجدد به بخش DNS Records در Cloudflare بروید و روی Add Record بزنید.
 - اینبار هم یک نام انتخاب کنید، گزینه Proxy غیرفعال باشد و آی پی سرور ایران را وارد کنید. اینجا ما از نام irserver استفاده کردیم. (irserver.site.com)
 
 [![New DNS Cloudflare](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/7-cloudflare-newdns2.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/7-cloudflare-newdns2.png)
@@ -125,7 +125,7 @@ server {
        }
 }
 ```
-- سپس فایل را ذخیره 
+- سپس فایل را ذخیره کنید. 
 - حالا دستورات زیر را وارد کنید و بجای DOMAIN اسم زیردامنه خودتان را بزنید.
 
 ```bash
@@ -140,7 +140,7 @@ service nginx restart
 sudo certbot --nginx -d DOMAIN
 ```
 
-- سپس ممکن سوالاتی از شما پرسیده میشود که ایمیل و نوع ریدایرکت و .. را وارد کنید و صبر کنید تا SSL فعال شود.
+- سپس ممکن است سوالاتی از شما پرسیده شود  که ایمیل و نوع ریدایرکت و ... را وارد کنید و صبر کنید تا SSL فعال شود.
 - پس از پایان مراحل آدرس دامنه را به صورت HTTPS باز کنید و تست کنید که خطای SSL ندارید مثلا: https://irserver.site.com
 - حال مانند بخش تنظیمات Nginx در سرور خارج عمل میکنیم و به ازای هر PATHی که برای آن VMESS داریم باید مقادیری را در فایل کانفیگ دامنه در NGINX اضافه کنیم.
 
@@ -328,7 +328,7 @@ key file path : `/root/private.key`
 
 مقادیر Port و Path را بخاطر بسپارید، زیرا در ادامه آموزش در بخش NGINX مورد استفاده قرار میگیرد. در اینجا path ما myuserurl و port ما 56010 می باشد.
 
-حال به ادامه آموزش نصب خود بازگردید.
+----
 
 ### پیکربندی و تنظیم Nginx در سرور مجازی خارج
 
@@ -362,7 +362,7 @@ server {
     return 404;
 }
 ```
-- سپس فایل را ذخیره 
+- سپس فایل را ذخیره کنید. 
 - حالا دستورات زیر را وارد کنید و بجای DOMAIN اسم زیردامنه خودتان را بزنید.
 
 ```bash
