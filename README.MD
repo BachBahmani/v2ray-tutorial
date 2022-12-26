@@ -1,5 +1,5 @@
 # آموزش نصب وی تو ری به همراه ابر آروان و یا سرور ایران
-## Install v2ray + ArvanCloud or Edge server (Iran Server)
+## Install v2ray (X-UI) + ArvanCloud or Edge server (Iran Server)
 
 
 -----------
@@ -52,13 +52,44 @@
 - در v2ray client های خود مثل ویندوز و ... بعد از وارد کردن QRCode آنها را ویرایش کنید و Port را به 443 تغییر دهید.
 - توجه داشته باشید، پیش از اشتراک v2rayها یکبار آنها را در V2ray ویندوز خود Import کنید و پورت را تغییر دهید و سپس مجدد آنها رو کپی کنید و به کاربران خود بدهید.
 - برای Import یک v2ray در نسخه ویندوز v2ray از کلید CTRL + V استفاده کنید، سپس روی آن دوبار کلیک کنید و پورت را ویرایش کنید و سپس روی OK بزنید. حال v2ray مربوطه را انتخاب کنید و روی CTRL + C بزنید و آنرا برای دوستان خود بفرستید.  
------------
 
+-----------
+-----------
 ## روش دوم) به کمک سرور مجازی ایران
 
+در این روش میتوانید از ArvanCloud یا Cloudflare و یا هر سرویس DNS دیگری استفاده کنید.
+
+در صورتی که میخواهید از ArvanCloud استفاده کنید، مانند آموزش بالا مراحل را طی کنید و در انتها سرویس ابری زیردامنه را فعال کنید و ادامه آموزش این بخش را دنبال کنید.
+در این بخش ما از Cloudflare استفاده میکنیم.
+
+- ابتدا در سایت [Cloudflare](https://cloudflare.com/) ثبت نام کنید و یک دامنه به آن متصل کنید.
+- در تنظیمات دامنه مربوطه از منوی DNS سپس Records روی گزینه Add a Record بزنید.
+- در قسمت Name یک عنوان برای زیردامنه انتخاب کنید، ما از Mytest استفاده میکنیم.
+- گزینه Proxy غیرفعال و روی DNS Only باشد.
+- در قسمت IPv4 Address، آی پی سرور خارجتان را وارد کنید و روی گزینه Save بزنید.
+
+[![New DNS Cloudflare](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/7-cloudflare-newdns.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/7-cloudflare-newdns.png)
+
+- حال به بخش [آموزش نصب X-UI](https://github.com/masterking32/v2ray-tutorial#%D8%A2%D9%85%D9%88%D8%B2%D8%B4-%D9%86%D8%B5%D8%A8-x-ui) بروید و پس از انجام مراحل به این بخش بگردید و ادامه این آموزش را انجام دهید.
+- [یک VMESS و کاربر جدید بسازید.](https://github.com/masterking32/v2ray-tutorial#%D8%B3%D8%A7%D8%AE%D8%AA-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1-%D8%AC%D8%AF%DB%8C%D8%AF)
+- [تنظیمات NGINX را انجام دهید](https://github.com/masterking32/v2ray-tutorial#%D9%BE%DB%8C%DA%A9%D8%B1%D8%A8%D9%86%D8%AF%DB%8C-%D9%88-%D8%AA%D9%86%D8%B8%DB%8C%D9%85-Nginx-%D8%AF%D8%B1-%D8%B3%D8%B1%D9%88%D8%B1-%D9%85%D8%AC%D8%A7%D8%B2%DB%8C-%D8%AE%D8%A7%D8%B1%D8%AC)
+- پس از نصب X-UI و سپس ساخت کاربر جدید و تنظیم Nginx ادامه این آموزش را دنبال کنید.
+- حال مجدد به بخش DNS Records در Cloudflare بروید و یک Add Record بزنید.
+- اینبار هم یک نام انتخاب کنید، گزینه Proxy غیرفعال باشد و آی پی سرور ایران را وارد کنید. اینجا ما از نام irserver استفاده کردیم. (irserver.site.com)
+
+[![New DNS Cloudflare](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/7-cloudflare-newdns.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/7-cloudflare-newdns.png)
+
+- دیگر با Cloudflare کاری نداریم و ادامه آموزش را در بخش پیکربندی سرور ایران دنبال میکنیم.
+
 -----------
+
+### پیکربندی سرور ایران
+
+
 -----------
+
 -----------
+
 -----------
 
 ## آموزش نصب X-UI
@@ -274,7 +305,4 @@ server {
     return 404;
 }
 ```
-
-
-
 
