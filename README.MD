@@ -48,6 +48,9 @@
 ## روش دوم) به کمک سرور مجازی ایران
 
 -----------
+-----------
+-----------
+-----------
 
 ## آموزش نصب X-UI
 
@@ -136,12 +139,19 @@ x-ui restart
 - مقادیر زیر را انتخاب کنید.
 
 remark: یک نام انتخاب کنید.
+
 protocol: `vmess`
+
 transmission: `ws`
+
 path: `/myuserurl` برای هرکاربر یه مقدار مخصوص و غیرتکراری وارد کنید.
+
 tls: فعال کنید.
+
 domain name: `mytest.site.com` نام دامنه شما
+
 public key file path: `/root/cert.crt`
+
 key file path : `/root/private.key`
 
 - روی گزینه Add To بزنید.
