@@ -9,8 +9,10 @@
 
 [![Semantic](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/1-semantic.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/1-semantic.png)
 
-روش های نصب: 
 - [پیش نیازها](https://github.com/masterking32/v2ray-tutorial#%D9%BE%DB%8C%D8%B4-%D9%86%DB%8C%D8%A7%D8%B2%D9%87%D8%A7)
+
+روش های نصب: 
+
 - [از طریق ابرآروان](https://github.com/masterking32/v2ray-tutorial#%D8%B1%D9%88%D8%B4-%D8%A7%D9%88%D9%84-%D8%A8%D9%87-%DA%A9%D9%85%DA%A9-%D8%A7%D8%A8%D8%B1%D8%A2%D8%B1%D9%88%D8%A7%D9%86)
 - [از طریق سرور مجازی ایران](https://github.com/masterking32/v2ray-tutorial#%D8%B1%D9%88%D8%B4-%D8%AF%D9%88%D9%85-%D8%A8%D9%87-%DA%A9%D9%85%DA%A9-%D8%B3%D8%B1%D9%88%D8%B1-%D9%85%D8%AC%D8%A7%D8%B2%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86)
 
@@ -233,10 +235,9 @@ reboot
 apt install curl sudo wget socat nano -y
 ```
 
----
 
 - حالا به مراحل نصب x-ui میرویم، یکی از موارد زیر را نصب کنید.
-- نسخه انگلیسی با قابلیتهای بیشتر (پیشنهادی)
+- نسخه انگلیسی شده - پیشنهادی
 
 ```bash
 bash <(curl -Ls https://raw.githubusercontent.com/hossinasaadi/x-ui/master/install.sh)
@@ -253,7 +254,6 @@ bash <(curl -Ls https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh)
 - سوال سوم رمزعبور پنل مدیریت را وارد کنید.
 - سوال چهارم پورت دسترسی به پنل مدیریت را وارد کنید (ما 9950 را استفاده کردیم)
 
----
 - نرم افزار Nginx را نصب و فعال کنید.
 
 ```bash
