@@ -77,7 +77,7 @@
 - حال مجدد به بخش DNS Records در Cloudflare بروید و یک Add Record بزنید.
 - اینبار هم یک نام انتخاب کنید، گزینه Proxy غیرفعال باشد و آی پی سرور ایران را وارد کنید. اینجا ما از نام irserver استفاده کردیم. (irserver.site.com)
 
-[![New DNS Cloudflare](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/7-cloudflare-newdns.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/7-cloudflare-newdns.png)
+[![New DNS Cloudflare](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/7-cloudflare-newdns2.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/7-cloudflare-newdns2.png)
 
 - دیگر با Cloudflare کاری نداریم و ادامه آموزش را در بخش پیکربندی سرور ایران دنبال میکنیم.
 
@@ -85,6 +85,61 @@
 
 ### پیکربندی سرور ایران
 
+- در سرور خود ابتدا دستورات زیر را به ترتیب وارد کنید.
+```bash
+apt update
+apt upgrade -y
+reboot
+```
+- پس از راه اندازی مجدد سرور دستورات زیر را وارد کنید.
+
+```bash
+apt install curl sudo wget socat nano -y
+```
+
+- حالا میرویم Nginx را نصب و راه اندازی کنیم دستورات زیر را به ترتیب وارد کنید.
+
+```bash
+apt install nginx -y
+systemctl enable nginx
+sudo apt install certbot python3-certbot-nginx
+```
+
+- دستور زیر را وارد کنید و بجای Domain آدرس زیردامنه مربوط به خود را بدهید. مثلا: `irserver.site.com`
+```bash
+nano /etc/nginx/sites-available/DOMAIN
+```
+- فایل با ویرایشگر متن باز میشود در آن مقدایر زیر را وارد کنید و در مقادیر زیر بجای DOMAIN آدرس زیر دامنه خود را بنویسید.
+
+```nginx
+server {
+       listen 80;
+       listen [::]:80;
+       server_name DOMAIN;
+       root /var/www/html;
+       index index.html;
+       location / {
+               try_files $uri $uri/ =404;
+       }
+}
+```
+- سپس فایل را ذخیره 
+- حالا دستورات زیر را وارد کنید و بجای DOMAIN اسم زیردامنه خودتان را بزنید.
+
+```bash
+ln /etc/nginx/sites-available/DOMAIN /etc/nginx/sites-enabled/DOMAIN
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.html
+service nginx restart
+```
+
+- حالا میرویم تا SSL برای دامنه نصب کنیم، به جای DOMAIN مقدار زیردامنه تان را وارد کنید. مثلا: irserver.site.com
+
+```bash
+sudo certbot --nginx -d DOMAIN
+```
+
+- سپس ممکن سوالاتی از شما پرسیده میشود که ایمیل و نوع ریدایرکت و .. را وارد کنید و صبر کنید تا SSL فعال شود.
+- پس از پایان مراحل آدرس دامنه را به صورت HTTPS باز کنید و تست کنید که خطای SSL ندارید مثلا: https://irserver.site.com
 
 -----------
 
