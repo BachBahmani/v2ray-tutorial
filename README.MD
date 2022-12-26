@@ -210,6 +210,9 @@ server {
 ```
 
 - حالا nginx را ریستارت کنید `service nginx restart`
+- حالا کافیست در v2ray هر QRCodeی که از XUI میگیرید را وارد کنید و قسمت پورت 443 و قسمت Address آدرس سرور ایران خودتان را بدهید مانند: irserver.site.com
+- در صورت نیاز میتوانید مقدار `Camouflage domain(host)` را هم به irserver.site.com تغییر دهید.
+
 -----------
 
 -----------
