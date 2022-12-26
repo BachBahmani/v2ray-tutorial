@@ -25,7 +25,7 @@
 -----------
 
 ## روش اول) به کمک ابرآروان
-- نکته: در صورتی که میتوانید با شماره و ایمیل خارجی و آی پی خارج در ابرآروان ثبت نام کنید و از دامنه آی ار استفاده نکنید و در هنگام استفاده از ابرآروان از فیلترشکن استفاده کنیدhttps://github.com/masterking32/v2ray-tutorial#آموزش-نصب-x-ui.
+- نکته: در صورتی که میتوانید با شماره و ایمیل خارجی و آی پی خارج در ابرآروان ثبت نام کنید و از دامنه آی ار استفاده نکنید و در هنگام استفاده از ابرآروان از فیلترشکن استفاده کنید.
 - ابتدا در سایت [ابرآروان](https://arvancloud.ir) ثبت نام کنید.
 - دامنه خود رو در بخش CDN ثبت کنید.
 - وارد پنل دامنه خود شده و از منوی سمت چپ وارد بخش تنظیمات HTTPS شوید و گزینه "فعال سازی HTTPS" را فعال کنید.
@@ -39,7 +39,7 @@
 
 [![Active New Record](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/3-arvan-newdnsrecord.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/3-arvan-newdnsrecord.png)
 
-- حال به بخش [آموزش نصب X-UI](https://github.com/masterking32/v2ray-tutorial#آموزش-نصب-x-ui) بروید و پس از انجام مراحل به این بخش بگردید و ادامه این آموزش را انجام دهید.
+- حال به بخش [آموزش نصب X-UI](https://github.com/masterking32/v2ray-tutorial#%D8%A2%D9%85%D9%88%D8%B2%D8%B4-%D9%86%D8%B5%D8%A8-x-ui) بروید و پس از انجام مراحل به این بخش بگردید و ادامه این آموزش را انجام دهید.
  
 ### این بخش را پس از نصب X-UI انجام دهید.
 
@@ -103,3 +103,23 @@ service nginx stop
 ~/.acme.sh/acme.sh --installcert -d DOMAIN --key-file /root/private.key --fullchain-file /root/cert.crt
 service nginx start
 ```
+
+- حالا در مرورگر آدرس آی پی سرور و پورتی که برای x-ui وارد کردید را بزنید مانند: http://99.99.99.99:9950
+- نام کاربری و رمزعبوری که هنگام نصب وارد کردید را بزنید و روی دکمه Login کلیک کنید و سپس به بخش تنظیمات بروید.
+
+[![XUI SETTINGS](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/4-xui-settings.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/4-xui-settings.png)
+
+- در بخش تنظیمات مقادیر را به شکل زیر وارد کنید:
+
+Panel certificate public key file path: `/root/cert.crt`
+
+Panel certificate key file path: `/root/private.key`
+
+panel url root path: `/mypanel/` هر چیزی میتوانید وارد کنید فقط ابتدا و انتهای آن / بزنید.
+
+- در نهایت روی Save بزنید و دستور زیر را وارد کنید.
+
+```sh
+x-ui restart
+```
+
