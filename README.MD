@@ -25,10 +25,10 @@
 -----------
 
 ## روش اول) به کمک ابرآروان
-- نکته: در صورتی که میتوانید با شماره و ایمیل خارجی و آی پی خارج در ابرآروان ثبت نام کنید و از دامنه آی ار استفاده نکنید و در هنگام استفاده از ابرآروان از فیلترشکن استفاده کنید.
+- نکته: در صورتی که میتوانید با شماره و ایمیل خارجی و آی پی خارج در ابرآروان ثبت نام کنید و از دامنه آی ار استفاده نکنید و در هنگام استفاده از ابرآروان از فیلترشکن استفاده کنیدhttps://github.com/masterking32/v2ray-tutorial#آموزش-نصب-x-ui.
 - ابتدا در سایت [ابرآروان](https://arvancloud.ir) ثبت نام کنید.
 - دامنه خود رو در بخش CDN ثبت کنید.
-- وارد پنل دامنه خود شده و از منوی سمت چپ وارد بخش تنظیمات HTTPS شوید و گزینه زیر را فعال کنید.
+- وارد پنل دامنه خود شده و از منوی سمت چپ وارد بخش تنظیمات HTTPS شوید و گزینه "فعال سازی HTTPS" را فعال کنید.
 
 [![ActiveHTTPS](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/2-arvan-https-active.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/2-arvan-https-active.png)
 
@@ -37,7 +37,11 @@
 - گزینه استفاده از سرویس ابری را خاموش کنید.
 - قسمت نشانی IP، آی پی سرور خارجتان را وارد کنید و در نهایت روی گزینه ذخیره بزنید.
 
-[![Active New Record](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/2-arvan-https-active.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/3-arvan-newdnsrecord.png)
+[![Active New Record](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/3-arvan-newdnsrecord.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/3-arvan-newdnsrecord.png)
+
+- حال به بخش [آموزش نصب X-UI](https://github.com/masterking32/v2ray-tutorial#آموزش-نصب-x-ui) بروید و پس از انجام مراحل به این بخش بگردید و ادامه این آموزش را انجام دهید.
+ 
+### این بخش را پس از نصب X-UI انجام دهید.
 
 -----------
 
@@ -45,4 +49,57 @@
 
 -----------
 
+## آموزش نصب X-UI
 
+- در سرور خود ابتدا دستورات زیر را به ترتیب وارد کنید.
+```bash
+apt update
+apt upgrade -y
+reboot
+```
+- پس از راه اندازی مجدد سرور دستورات زیر را وارد کنید.
+
+```bash
+apt install curl sudo wget socat -y
+```
+
+---
+
+- حالا به مراحل نصب x-ui میرویم، یکی از موارد زیر را نصب کنید.
+- نسخه انگلیسی با قابلیتهای بیشتر (پیشنهادی)
+
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/hossinasaadi/x-ui/master/install.sh)
+```
+
+- نسخه اصلی با زبان چینی
+
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh)
+```
+
+- سوال اول را y زده
+- سوال دوم را نام کاربری پنل مدیریت را وارد کنید
+- سوال سوم رمزعبور پنل مدیریت را وارد کنید.
+- سوال چهارم پورت دسترسی به پنل مدیریت را وارد کنید (ما 9950 را استفاده کردیم)
+
+---
+- نرم افزار Nginx را نصب و فعال کنید.
+
+```bash
+apt install nginx
+systemctl enable nginx
+```
+
+- حالا میرویم تا سرتیفیکیت بسازیم، دستورات زیر را به ترتیب وارد کنید.
+- در دستورات زیر بجای DOMAIN آدرس زیردامنه خود را وارد کنید. مثلا: MyTest.Site.CoM
+
+```bash
+curl https://get.acme.sh | sh
+~/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+~/.acme.sh/acme.sh --register-account -m admin@DOMAIN
+service nginx stop
+~/.acme.sh/acme.sh --issue -d DOMAIN --standalone
+~/.acme.sh/acme.sh --installcert -d DOMAIN --key-file /root/private.key --fullchain-file /root/cert.crt
+service nginx start
+```
