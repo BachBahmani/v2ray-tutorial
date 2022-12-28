@@ -4,12 +4,16 @@
 
 -----------
 
+### [ویدیو آموزش تصویری](https://www.youtube.com/watch?v=oh6JuHGTi60)
+
+-----------
 
 ## نمای کلی:
 
 [![Semantic](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/1-semantic.png)](https://raw.githubusercontent.com/masterking32/v2ray-tutorial/main/images/1-semantic.png)
 
 - [پیش نیازها](https://github.com/masterking32/v2ray-tutorial#%D9%BE%DB%8C%D8%B4-%D9%86%DB%8C%D8%A7%D8%B2%D9%87%D8%A7)
+- [ویدیو آموزش تصویری](https://www.youtube.com/watch?v=oh6JuHGTi60)
 
 روش های نصب: 
 
